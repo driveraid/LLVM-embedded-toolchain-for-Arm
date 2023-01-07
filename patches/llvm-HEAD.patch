@@ -1,8 +1,26 @@
-diff --git a/.gitignore b/.gitignore
-index 20c4f52cd378..eefdedbcb4f4 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -1,2 +1,2 @@
--#==============================================================================#
-+#==============================================================================#
- # This file specifies intentionally untracked files that git should ignore.
+diff --git a/libunwind/src/Unwind_AppleExtras.cpp b/libunwind/src/Unwind_AppleExtras.cpp
+index ffb49a89e..7470ca5f0 100644
+--- a/libunwind/src/Unwind_AppleExtras.cpp
++++ b/libunwind/src/Unwind_AppleExtras.cpp
+@@ -12,6 +12,8 @@
+ 
+ // static linker symbols to prevent wrong two level namespace for _Unwind symbols
+ #if defined(__arm__)
++  #define NOT_HERE_BEFORE_10_6(sym)
++  #define NEVER_HERE(sym)
+    #define NOT_HERE_BEFORE_5_0(sym)     \
+        extern const char sym##_tmp30 __asm("$ld$hide$os3.0$_" #sym ); \
+        __attribute__((visibility("default"))) const char sym##_tmp30 = 0; \
+diff --git a/runtimes/CMakeLists.txt b/runtimes/CMakeLists.txt
+index 50f782205..c9bf6b0f5 100644
+--- a/runtimes/CMakeLists.txt
++++ b/runtimes/CMakeLists.txt
+@@ -9,6 +9,8 @@ if ("${CMAKE_VERSION}" VERSION_LESS "3.20.0")
+ endif()
+ project(Runtimes C CXX ASM)
+ 
++set(APPLE False)
++
+ # Add path for custom and the LLVM build's modules to the CMake module path.
+ set(LLVM_COMMON_CMAKE_UTILS "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
+ list(INSERT CMAKE_MODULE_PATH 0
